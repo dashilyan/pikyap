@@ -1,9 +1,8 @@
 #pK 1
-class Book:
-    def __init__(self, book_id, title, author, genre, price, library_id):
-        self.book_id = book_id
+class CD_disk:
+    def __init__(self, CD_disk_id, title, genre, price, library_id):
+        self.CD_disk_id = CD_disk_id
         self.title = title
-        self.author = author
         self.genre = genre
         self.price = price
         self.library_id = library_id
@@ -13,34 +12,34 @@ class Library:
         self.library_id = library_id
         self.name = name
 
-class BooksLibrary:
-    def __init__(self, book_id, library_id):
-        self.book_id = book_id
+class CD_disksLibrary:
+    def __init__(self, CD_disk_id, library_id):
+        self.CD_disk_id = CD_disk_id
         self.library_id = library_id
 
-def list_books_by_library(books, libraries):
-    books_by_library = {}
+def list_CD_disks_by_library(CD_disks, libraries):
+    CD_disks_by_library = {}
     
-    for book in books:
-        if book.library_id not in books_by_library:
-            books_by_library[book.library_id] = []
-        books_by_library[book.library_id].append(book)
+    for CD_disk in CD_disks:
+        if CD_disk.library_id not in CD_disks_by_library:
+            CD_disks_by_library[CD_disk.library_id] = []
+        CD_disks_by_library[CD_disk.library_id].append(CD_disk)
     
     for library in libraries:
-        if library.library_id in books_by_library:
-            books_in_library = books_by_library[library.library_id]
-            books_in_library.sort(key=lambda b: b.title)
+        if library.library_id in CD_disks_by_library:
+            CD_disks_in_library = CD_disks_by_library[library.library_id]
+            CD_disks_in_library.sort(key=lambda b: b.title)
             print(f"Библиотека: {library.name}")
-            for book in books_in_library:
-                print(f" - {book.title} (Автор: {book.author}, Жанр: {book.genre})")
+            for CD_disk in CD_disks_in_library:
+                print(f" - {CD_disk.title} (Жанр: {CD_disk.genre}, Цена: {CD_disk.price})")
 
-def list_libraries_by_total_book_price(books, libraries):
+def list_libraries_by_total_CD_disk_price(CD_disks, libraries):
     library_prices = {}
     
-    for book in books:
-        if book.library_id not in library_prices:
-            library_prices[book.library_id] = 0
-        library_prices[book.library_id] += book.price
+    for CD_disk in CD_disks:
+        if CD_disk.library_id not in library_prices:
+            library_prices[CD_disk.library_id] = 0
+        library_prices[CD_disk.library_id] += CD_disk.price
     
     sorted_libraries = sorted(library_prices.items(), key=lambda x: x[1], reverse=True)
     
@@ -49,41 +48,41 @@ def list_libraries_by_total_book_price(books, libraries):
         print(f"Библиотека: {library.name}, Суммарная цена книг: {total_price}")
 
 
-def list_libraries_and_books_with_keyword(books, libraries, books_libraries, keyword):  
+def list_libraries_and_CD_disks_with_keyword(CD_disks, libraries, CD_disks_libraries, keyword):  
     relevant_libraries = [lib for lib in libraries if keyword.lower() in lib.name.lower()]
     
     for library in relevant_libraries:
         print(f"Библиотека: {library.name}")
-        books_in_library = [book for book in books if any(bl.book_id == book.book_id for bl in books_libraries if bl.library_id == library.library_id)]
+        CD_disks_in_library = [CD_disk for CD_disk in CD_disks if any(bl.CD_disk_id == CD_disk.CD_disk_id for bl in CD_disks_libraries if bl.library_id == library.library_id)]
         
-        for book in books_in_library:
-            print(f" - {book.title} (Автор: {book.author}, Жанр: {book.genre}, Цена: {book.price})")
+        for CD_disk in CD_disks_in_library:
+            print(f" - {CD_disk.title} (Жанр: {CD_disk.genre}, Цена: {CD_disk.price})")
 
 # задание 1
 print("\nЗадание 1")
-books = [
-    Book(1, "Книга 1", "Автор 1", "Фантастика", 100, 1),
-    Book(2, "Книга 2", "Автор 2", "Роман",150, 1),
-    Book(3, "Книга 3", "Автор 3", "Фэнтези",200, 2),
+CD_disks = [
+    CD_disk(1, "CD 1", "Фантастика", 100, 1),
+    CD_disk(2, "CD 2", "Роман",150, 1),
+    CD_disk(3, "CD 3", "Фэнтези",200, 2),
 ]
 libraries = [
     Library(1, "Библиотека 1"),
     Library(2, "Библиотека 2"),
 ]
-list_books_by_library(books, libraries)
+list_CD_disks_by_library(CD_disks, libraries)
 
 #задание 2
 print("\nЗадание 2")
-list_libraries_by_total_book_price(books, libraries)
+list_libraries_by_total_CD_disk_price(CD_disks, libraries)
 
 #задание 3
 print("\nЗадание 3")
-books_libraries=[
-    BooksLibrary(1,1),
-    BooksLibrary(1,2),
-    BooksLibrary(2,2),
-    BooksLibrary(3,1),
-    BooksLibrary(3,2)
+CD_disks_libraries=[
+    CD_disksLibrary(1,1),
+    CD_disksLibrary(1,2),
+    CD_disksLibrary(2,2),
+    CD_disksLibrary(3,1),
+    CD_disksLibrary(3,2)
 ]
 keyword = "Библиотека"
-list_libraries_and_books_with_keyword(books, libraries, books_libraries, keyword)
+list_libraries_and_CD_disks_with_keyword(CD_disks, libraries, CD_disks_libraries, keyword)
